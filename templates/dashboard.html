@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PortHub Security IDS | Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">     
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
+
+    <div class="container-fluid">
+
+        <!-- Logo + Title -->
+        <div class="d-flex align-items-center">
+
+            <i class="bi bi-shield-lock-fill text-primary fs-1 me-3"></i>
+
+            <div>
+
+                <h3 class="mb-0 fw-bold text-white">
+                    PortHub Security IDS
+                </h3>
+
+                <small class="text-muted">
+                    Network Intrusion Detection Dashboard
+                </small>
+
+            </div>
+
+        </div>
+
+        <!-- Version Badge -->
+        <div>
+
+            <span class="badge bg-primary fs-6 px-3 py-2">
+                Version 3.0
+            </span>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<div class="container-fluid mt-4">
+
+    <!-- ===================== -->
+<!-- KPI CARDS -->
+<!-- ===================== -->
+
+<div class="row g-4">
+
+    <!-- Total Alerts -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card border-primary">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-uppercase text-muted mb-2">
+                            Total Alerts
+                        </h6>
+
+                        <h2 class="mb-1">
+                            {{ stats.total_alerts }}
+                        </h2>
+
+                        <small class="text-muted">
+                            Alerts Generated
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-exclamation-triangle-fill dashboard-icon text-primary"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Today's Alerts -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card border-info">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-uppercase text-muted mb-2">
+                            Today's Alerts
+                        </h6>
+
+                        <h2 class="mb-1">
+                            {{ stats.today_alerts }}
+                        </h2>
+
+                        <small class="text-muted">
+                            Last 24 Hours
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-calendar-event-fill dashboard-icon text-info"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Risk Score -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card border-danger">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-uppercase text-muted mb-2">
+                            Risk Score
+                        </h6>
+
+                        <h2 class="mb-1">
+                            {{ risk.score }}
+                        </h2>
+
+                        <small class="text-danger fw-bold">
+                            {{ risk.status }}
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-fire dashboard-icon text-danger"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Detection Modules -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card border-success">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-uppercase text-muted mb-2">
+                            Detection Modules
+                        </h6>
+
+                        <h2 class="mb-1">
+                            5
+                        </h2>
+
+                        <small class="text-success fw-bold">
+                            Active Modules
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-shield-check dashboard-icon text-success"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+            
+
+            
+
+    <!-- ====================================================== -->
+<!-- Analytics Cards -->
+<!-- ====================================================== -->
+
+<div class="row mt-4 g-4">
+
+    <!-- Top Attacker -->
+
+    <div class="col-lg-4">
+
+        <div class="card analytics-card h-100">
+
+            <div class="card-header">
+
+                <i class="bi bi-crosshair2 me-2 text-danger"></i>
+
+                Top Attacker
+
+            </div>
+
+            <div class="card-body">
+
+                {% if stats.top_attacker %}
+
+                    <h3 class="ip-address">
+
+                        {{ stats.top_attacker[0] }}
+
+                    </h3>
+
+                    <p class="text-muted mb-0">
+
+                        Highest number of generated alerts
+
+                    </p>
+
+                {% else %}
+
+                    <h3>N/A</h3>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Most Targeted Host -->
+
+    <div class="col-lg-4">
+
+        <div class="card analytics-card h-100">
+
+            <div class="card-header">
+
+                <i class="bi bi-bullseye me-2 text-warning"></i>
+
+                Most Targeted Host
+
+            </div>
+
+            <div class="card-body">
+
+                {% if stats.top_target %}
+
+                    <h3 class="ip-address">
+
+                        {{ stats.top_target[0] }}
+
+                    </h3>
+
+                    <p class="text-muted mb-0">
+
+                        Most frequently targeted destination
+
+                    </p>
+
+                {% else %}
+
+                    <h3>N/A</h3>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Alert Distribution -->
+
+    <div class="col-lg-4">
+
+        <div class="card analytics-card h-100">
+
+            <div class="card-header">
+
+                <i class="bi bi-bar-chart-fill me-2 text-primary"></i>
+
+                Alert Distribution
+
+            </div>
+
+            <div class="card-body">
+
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item d-flex justify-content-between">
+
+                        <span>
+
+                            <i class="bi bi-radar me-2 text-danger"></i>
+
+                            Port Scan
+
+                        </span>
+
+                        <span class="badge bg-danger">
+
+                            {{ stats.port_scans }}
+
+                        </span>
+
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+
+                        <span>
+
+                            <i class="bi bi-terminal-fill me-2 text-primary"></i>
+
+                            SSH
+
+                        </span>
+
+                        <span class="badge bg-primary">
+
+                            {{ stats.ssh_alerts }}
+
+                        </span>
+
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+
+                        <span>
+
+                            <i class="bi bi-folder-fill me-2 text-warning"></i>
+
+                            FTP
+
+                        </span>
+
+                        <span class="badge bg-warning text-dark">
+
+                            {{ stats.ftp_alerts }}
+
+                        </span>
+
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+
+                        <span>
+
+                            <i class="bi bi-broadcast-pin me-2 text-success"></i>
+
+                            ICMP
+
+                        </span>
+
+                        <span class="badge bg-success">
+
+                            {{ stats.icmp_alerts }}
+
+                        </span>
+
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+
+                        <span>
+
+                            <i class="bi bi-router-fill me-2 text-secondary"></i>
+
+                            Telnet
+
+                        </span>
+
+                        <span class="badge bg-secondary">
+
+                            {{ stats.telnet_alerts }}
+
+                        </span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+    <!-- Charts -->
+
+    <div class="row mt-4 g-4">
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+    <span>
+
+        <i class="bi bi-pie-chart-fill me-2 text-primary"></i>
+
+        Alert Type Distribution
+
+    </span>
+
+</div>
+            <div class="card-body">
+                <canvas id="alertPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+    <span>
+
+        <i class="bi bi-shield-fill-exclamation me-2 text-danger"></i>
+
+        Severity Distribution
+
+    </span>
+
+</div>
+            <div class="card-body">
+                <canvas id="severityChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+    <span>
+
+        <i class="bi bi-bar-chart-line-fill me-2 text-warning"></i>
+
+        Top Attackers
+
+    </span>
+
+</div>
+            <div class="card-body">
+                <canvas id="attackerChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <!-- Recent Alerts -->
+
+    <div class="card mt-4">
+
+        <div class="card-header">
+
+            Recent Alerts
+
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-dark table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Timestamp</th>
+                        <th>Alert</th>
+                        <th>Severity</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Details</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+{% if alerts %}
+
+    {% for alert in alerts %}
+
+    <tr>
+
+        <td>{{ alert.id }}</td>
+        <td>{{ alert.timestamp }}</td>
+        <td>{{ alert.alert_type }}</td>
+
+        <td>
+
+        {% if alert.severity == "CRITICAL" %}
+            <span class="badge bg-danger">{{ alert.severity }}</span>
+        {% elif alert.severity == "HIGH" %}
+            <span class="badge bg-warning text-dark">{{ alert.severity }}</span>
+        {% elif alert.severity == "MEDIUM" %}
+            <span class="badge bg-info">{{ alert.severity }}</span>
+        {% else %}
+            <span class="badge bg-success">{{ alert.severity }}</span>
+        {% endif %}
+
+        </td>
+
+        <td class="ip-address-small">{{ alert.src_ip }}</td>
+        <td class="ip-address-small">{{ alert.dst_ip }}</td>
+        <td>{{ alert.details }}</td>
+
+    </tr>
+
+    {% endfor %}
+
+{% else %}
+
+<tr>
+
+<td colspan="7" class="text-center text-muted py-5">
+
+<i class="bi bi-check-circle-fill text-success fs-1"></i>
+
+<br><br>
+
+No alerts detected.
+
+<br>
+
+System operating normally.
+
+</td>
+
+</tr>
+
+{% endif %}
+
+</tbody>
+
+
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Top Attackers -->
+
+    <div class="card mt-4">
+
+        <div class="card-header">
+
+            Top Attackers
+
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-dark table-hover">
+
+                <thead>
+
+                 <tr>
+
+<th>#</th>
+
+<th>Source IP</th>
+
+<th>Total Alerts</th>
+
+</tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for attacker in stats.top_attackers %}
+
+                    <tr>
+
+<td>
+
+{{ loop.index }}
+
+</td>
+
+<td class="ip-address-small">
+
+{{ attacker[0] }}
+
+</td>
+
+<td>
+
+<span class="badge bg-primary">
+
+{{ attacker[1] }}
+
+</span>
+
+</td>
+
+</tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <footer class="footer mt-5">
+
+    <hr class="border-secondary">
+
+    <div class="container text-center">
+
+        <h5 class="mb-2">
+            <i class="bi bi-shield-lock-fill text-primary"></i>
+            PortHub Security IDS
+        </h5>
+
+        <p class="mb-1 text-muted">
+            Network Intrusion Detection System
+        </p>
+
+        <small class="text-muted">
+
+            Version 3.0 |
+            Developed by <strong>Abhi Karthik</strong>
+
+        </small>
+
+        <br>
+
+        <small class="text-muted">
+
+            Advanced Diploma in Information Security
+
+        </small>
+
+    </div>
+
+</footer>
+
+</div>
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Data for Charts -->
+<script>
+
+const chartValues = [
+    {{ chart_data["Port Scan"] }},
+    {{ chart_data["SSH"] }},
+    {{ chart_data["FTP"] }},
+    {{ chart_data["ICMP"] }},
+    {{ chart_data["Telnet"] }}
+];
+
+const severityValues = [
+    {{ severity_chart["LOW"] }},
+    {{ severity_chart["MEDIUM"] }},
+    {{ severity_chart["HIGH"] }},
+    {{ severity_chart["CRITICAL"] }}
+];
+
+const attackerLabels = [
+{% for ip in top_attackers_chart.attacker_ips %}
+"{{ ip }}",
+{% endfor %}
+];
+
+const attackerValues = [
+{% for count in top_attackers_chart.alert_counts %}
+{{ count }},
+{% endfor %}
+];
+
+</script>
+
+<!-- Custom JavaScript -->
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/refresh.js') }}"></script>
+
+</body>
+
+</html>
