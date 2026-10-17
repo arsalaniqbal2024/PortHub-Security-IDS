@@ -8,7 +8,7 @@ PortHub Security IDS Configuration
 # Network Interface
 # ==========================================================
 
-INTERFACE = "eth0"
+INTERFACE = "WiFi"
 
 # ==========================================================
 # Database
