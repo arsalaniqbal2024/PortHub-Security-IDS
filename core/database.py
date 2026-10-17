@@ -149,6 +149,26 @@ class DatabaseManager:
 
         return count
 
+    def get_status_count(self, status):
+        """Return the number of alerts with a specific status."""
+
+        conn = self.connect()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            """
+            SELECT COUNT(*)
+            FROM alerts
+            WHERE status = ?
+            """,
+            (status,)
+        )
+
+        count = cursor.fetchone()[0]
+        conn.close()
+
+        return count
+
     def get_alert_count(self, alert_type):
         """Return the total number of alerts for a specific alert type."""
 

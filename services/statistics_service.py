@@ -8,6 +8,8 @@ def get_dashboard_statistics():
     # Basic Statistics
     stats["total_alerts"] = database.get_total_alerts()
     stats["today_alerts"] = database.get_today_alerts()
+    stats["new_alerts"] = database.get_status_count("NEW")
+    stats["acknowledged_alerts"] = database.get_status_count("ACKNOWLEDGED")
 
     # Alert Counts
     stats["port_scans"] = database.get_alert_count("PORT_SCAN")
