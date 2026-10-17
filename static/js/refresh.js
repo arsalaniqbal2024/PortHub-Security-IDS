@@ -1,5 +1,1 @@
-setTimeout(function(){
-
-    location.reload();
-
-},5000);
+// Automatic page refresh temporarily disabled.
