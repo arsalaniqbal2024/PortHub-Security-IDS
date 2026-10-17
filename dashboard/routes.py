@@ -1,4 +1,6 @@
-from flask import render_template
+import csv
+from io import StringIO
+from flask import render_template, Response
 
 from app import app
 
@@ -67,3 +69,32 @@ def dashboard():
         top_attackers_chart=top_attackers_chart
 
     )
+@app.route("/export-alerts")
+def export_alerts():
+    alerts = database.get_all_alerts()
+
+    output = StringIO()
+    writer = csv.writer(output)
+
+    writer.writerow([
+        "ID",
+        "Timestamp",
+        "Alert Type",
+        "Source IP",
+        "Destination IP",
+        "Severity",
+        "Details"
+    ])
+
+    writer.writerows(alerts)
+
+    response = Response(
+        output.getvalue(),
+        mimetype="text/csv"
+    )
+
+    response.headers["Content-Disposition"] = (
+        "attachment; filename=porthub_alerts.csv"
+    )
+
+    return response
