@@ -1,6 +1,6 @@
 import csv
 from io import StringIO
-from flask import render_template, Response
+from flask import render_template, Response, redirect, url_for
 
 from app import app
 
@@ -47,7 +47,8 @@ def dashboard():
             "src_ip": alert[3],
             "dst_ip": alert[4],
             "severity": alert[5],
-            "details": alert[6]
+            "details": alert[6],
+            "status": alert[7]
 
         })
 
@@ -83,7 +84,8 @@ def export_alerts():
         "Source IP",
         "Destination IP",
         "Severity",
-        "Details"
+        "Details",
+        "Status"
     ])
 
     writer.writerows(alerts)
@@ -98,3 +100,7 @@ def export_alerts():
     )
 
     return response
+@app.route("/acknowledge-alert/<int:alert_id>", methods=["POST"])
+def acknowledge_alert(alert_id):
+    database.acknowledge_alert(alert_id)
+    return redirect(url_for("dashboard"))

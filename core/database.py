@@ -39,7 +39,15 @@ class DatabaseManager:
 
         )
         """)
+                  # Add status column to existing databases if needed
+        cursor.execute("PRAGMA table_info(alerts)")
+        columns = [row[1] for row in cursor.fetchall()]
 
+        if "status" not in columns:
+            cursor.execute("""
+                ALTER TABLE alerts
+                ADD COLUMN status TEXT NOT NULL DEFAULT 'NEW'
+            """)
         conn.commit()
         conn.close()
 
@@ -100,6 +108,29 @@ class DatabaseManager:
         conn.close()
 
         return alerts
+   
+ 
+    def acknowledge_alert(self, alert_id):
+        """Mark an alert as acknowledged."""
+
+        conn = self.connect()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            """
+            UPDATE alerts
+            SET status = ?
+            WHERE id = ?
+            """,
+            ("ACKNOWLEDGED", alert_id)
+        )
+
+        updated = cursor.rowcount > 0
+
+        conn.commit()
+        conn.close()
+
+        return updated
 
     def get_total_alerts(self):
         """Return the total number of alerts."""

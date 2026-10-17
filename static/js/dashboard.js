@@ -13,7 +13,7 @@ function filterAlerts() {
 
     rows.forEach((row) => {
         // Handle the "No alerts detected" placeholder row
-        if (row.cells.length < 7) {
+        if (row.cells.length < 9) {
             row.style.display =
                 (!searchText && !selectedSeverity && !selectedType)
                     ? ""
@@ -85,7 +85,7 @@ if (
         const visibleRows = Array.from(
             table.querySelectorAll("tbody tr")
         ).filter((row) => {
-            return row.cells.length === 7 &&
+            return row.cells.length === 9 &&
                    row.style.display !== "none";
         });
 
