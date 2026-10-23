@@ -818,35 +818,33 @@ System operating normally.
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- Data for Charts -->
+<script id="chart-data" type="application/json">
+{{ {
+    "chartValues": [
+        chart_data["Port Scan"],
+        chart_data["SSH"],
+        chart_data["FTP"],
+        chart_data["ICMP"],
+        chart_data["Telnet"]
+    ],
+    "severityValues": [
+        severity_chart["LOW"],
+        severity_chart["MEDIUM"],
+        severity_chart["HIGH"],
+        severity_chart["CRITICAL"]
+    ],
+    "attackerLabels": top_attackers_chart.attacker_ips,
+    "attackerValues": top_attackers_chart.alert_counts
+} | tojson }}
+</script>
+
 <script>
-
-const chartValues = [
-    {{ chart_data["Port Scan"] }},
-    {{ chart_data["SSH"] }},
-    {{ chart_data["FTP"] }},
-    {{ chart_data["ICMP"] }},
-    {{ chart_data["Telnet"] }}
-];
-
-const severityValues = [
-    {{ severity_chart["LOW"] }},
-    {{ severity_chart["MEDIUM"] }},
-    {{ severity_chart["HIGH"] }},
-    {{ severity_chart["CRITICAL"] }}
-];
-
-const attackerLabels = [
-{% for ip in top_attackers_chart.attacker_ips %}
-"{{ ip }}",
-{% endfor %}
-];
-
-const attackerValues = [
-{% for count in top_attackers_chart.alert_counts %}
-{{ count }},
-{% endfor %}
-];
-
+const {
+    chartValues,
+    severityValues,
+    attackerLabels,
+    attackerValues
+} = JSON.parse(document.getElementById("chart-data").textContent);
 </script>
 
 <!-- Custom JavaScript -->
