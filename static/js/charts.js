@@ -26,13 +26,17 @@ if (pieCanvas) {
 
                 backgroundColor: [
 
-                    "#dc3545",
-                    "#0d6efd",
-                    "#ffc107",
-                    "#198754",
-                    "#6c757d"
+                    "#FF6577",
+                    "#22D3EE",
+                    "#F5B942",
+                    "#39F59A",
+                    "#71899B"
 
-                ]
+                ],
+
+                borderColor: "#0E1B2A",
+
+                borderWidth: 2
 
             }]
 
@@ -48,9 +52,23 @@ if (pieCanvas) {
 
                     labels: {
 
-                        color: "white"
+                        color: "#C4D3DF"
 
                     }
+
+                },
+
+                tooltip: {
+
+                    backgroundColor: "#102235",
+
+                    titleColor: "#E5F0F7",
+
+                    bodyColor: "#C4D3DF",
+
+                    borderColor: "#31536A",
+
+                    borderWidth: 1
 
                 }
 
@@ -96,15 +114,19 @@ if (severityCanvas) {
 
                 backgroundColor: [
 
-                    "#28a745",
+                    "#39F59A",
 
-                    "#17a2b8",
+                    "#54C7E8",
 
-                    "#ffc107",
+                    "#F5B942",
 
-                    "#dc3545"
+                    "#FF6577"
 
-                ]
+                ],
+
+                borderColor: "#0E1B2A",
+
+                borderWidth: 2
 
             }]
 
@@ -120,9 +142,23 @@ if (severityCanvas) {
 
                     labels: {
 
-                        color: "white"
+                        color: "#C4D3DF"
 
                     }
+
+                },
+
+                tooltip: {
+
+                    backgroundColor: "#102235",
+
+                    titleColor: "#E5F0F7",
+
+                    bodyColor: "#C4D3DF",
+
+                    borderColor: "#31536A",
+
+                    borderWidth: 1
 
                 }
 
@@ -156,7 +192,15 @@ if (attackerCanvas) {
 
                 label: "Alerts",
 
-                data: attackerValues
+                data: attackerValues,
+
+                backgroundColor: "#22D3EE",
+
+                borderColor: "#22D3EE",
+
+                borderWidth: 1,
+
+                borderRadius: 3
 
             }]
 
@@ -172,9 +216,23 @@ if (attackerCanvas) {
 
                     labels: {
 
-                        color: "white"
+                        color: "#C4D3DF"
 
                     }
+
+                },
+
+                tooltip: {
+
+                    backgroundColor: "#102235",
+
+                    titleColor: "#E5F0F7",
+
+                    bodyColor: "#C4D3DF",
+
+                    borderColor: "#31536A",
+
+                    borderWidth: 1
 
                 }
 
@@ -184,9 +242,21 @@ if (attackerCanvas) {
 
                 x: {
 
+                    grid: {
+
+                        color: "rgba(148,170,188,.14)"
+
+                    },
+
+                    border: {
+
+                        color: "rgba(148,170,188,.28)"
+
+                    },
+
                     ticks: {
 
-                        color: "white"
+                        color: "#C4D3DF"
 
                     }
 
@@ -196,9 +266,21 @@ if (attackerCanvas) {
 
                     beginAtZero: true,
 
+                    grid: {
+
+                        color: "rgba(148,170,188,.14)"
+
+                    },
+
+                    border: {
+
+                        color: "rgba(148,170,188,.28)"
+
+                    },
+
                     ticks: {
 
-                        color: "white"
+                        color: "#C4D3DF"
 
                     }
 

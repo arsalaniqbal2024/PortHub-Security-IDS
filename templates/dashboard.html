@@ -23,49 +23,72 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark py-3">
+<div class="soc-app">
 
-    <div class="container-fluid">
+    <aside class="soc-sidebar" aria-label="Dashboard navigation">
 
-        <!-- Logo + Title -->
-        <div class="d-flex align-items-center">
-
-            <i class="bi bi-shield-lock-fill text-primary fs-1 me-3"></i>
-
-            <div>
-
-                <h3 class="mb-0 fw-bold text-white">
-                    PortHub Security IDS
-                </h3>
-
-                <small class="text-muted">
-                    Network Intrusion Detection Dashboard
-                </small>
-
-            </div>
-
-        </div>
-
-        <!-- Version Badge -->
-        <div>
-
-            <span class="badge bg-primary fs-6 px-3 py-2">
-                Version 3.0
+        <a class="soc-brand" href="#overview" aria-label="PortHub Security IDS overview">
+            <span class="soc-brand-mark"><i class="bi bi-shield-lock-fill"></i></span>
+            <span class="soc-brand-copy">
+                <strong>PortHub</strong>
+                <small>Security IDS</small>
             </span>
+        </a>
 
+        <span class="soc-version">Version 3.0</span>
+
+        <nav class="soc-nav" aria-label="Dashboard sections">
+            <span class="soc-nav-label">Workspace</span>
+            <a class="soc-nav-link is-active" href="#overview">
+                <i class="bi bi-grid-1x2-fill" aria-hidden="true"></i>
+                <span>Overview</span>
+            </a>
+            <a class="soc-nav-link" href="#analytics">
+                <i class="bi bi-graph-up-arrow" aria-hidden="true"></i>
+                <span>Threat analytics</span>
+            </a>
+            <a class="soc-nav-link" href="#recent-alerts">
+                <i class="bi bi-bell-fill" aria-hidden="true"></i>
+                <span>Recent alerts</span>
+            </a>
+            <a class="soc-nav-link" href="#top-attackers">
+                <i class="bi bi-crosshair2" aria-hidden="true"></i>
+                <span>Top attackers</span>
+            </a>
+        </nav>
+
+        <div class="soc-sidebar-footer">
+            <span class="soc-sidebar-caption">Current risk posture</span>
+            <strong>{{ risk.status }}</strong>
         </div>
 
-    </div>
+    </aside>
 
-</nav>
+    <div class="soc-main">
 
-<div class="container-fluid mt-4">
+        <header class="soc-topbar">
+            <div class="soc-topbar-title">
+                <span class="soc-topbar-kicker">Network defense</span>
+                <h1>Security operations</h1>
+            </div>
+            <div class="soc-topbar-risk">
+                <span>Risk posture</span>
+                <strong>{{ risk.status }}</strong>
+            </div>
+        </header>
 
-    <!-- ===================== -->
-<!-- KPI CARDS -->
-<!-- ===================== -->
+        <main class="soc-content container-fluid">
 
-<div class="row g-4">
+            <section id="overview" class="dashboard-section">
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">Overview</span>
+                        <h2>Alert posture</h2>
+                    </div>
+                    <p>Network alert activity and review status</p>
+                </div>
+
+<div class="row g-3 kpi-grid">
 
     <!-- Total Alerts -->
 
@@ -270,15 +293,24 @@
     </div>
 
 </div>
-            
 
-            
+            </section>
 
     <!-- ====================================================== -->
 <!-- Analytics Cards -->
 <!-- ====================================================== -->
 
-<div class="row mt-4 g-4">
+<section id="analytics" class="dashboard-section">
+
+    <div class="section-heading">
+        <div>
+            <span class="section-kicker">Analysis</span>
+            <h2>Threat analytics</h2>
+        </div>
+        <p>Observed sources, targets, and alert distribution</p>
+    </div>
+
+<div class="row g-3 summary-grid">
 
     <!-- Top Attacker -->
 
@@ -484,12 +516,19 @@
 
 
 
+    <div class="section-heading chart-section-heading">
+        <div>
+            <span class="section-kicker">Telemetry</span>
+            <h2>Threat activity</h2>
+        </div>
+    </div>
+
     <!-- Charts -->
 
-    <div class="row mt-4 g-4">
+    <div class="row g-3 chart-grid">
 
-    <div class="col-lg-4">
-        <div class="card">
+    <div class="col-lg-6">
+        <div class="card chart-card">
             <div class="card-header d-flex justify-content-between align-items-center">
 
     <span>
@@ -501,14 +540,16 @@
     </span>
 
 </div>
-            <div class="card-body">
+            <div class="card-body chart-card-body">
+                <div class="chart-frame">
                 <canvas id="alertPieChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-4">
-        <div class="card">
+    <div class="col-lg-6">
+        <div class="card chart-card">
             <div class="card-header d-flex justify-content-between align-items-center">
 
     <span>
@@ -520,14 +561,16 @@
     </span>
 
 </div>
-            <div class="card-body">
+            <div class="card-body chart-card-body">
+                <div class="chart-frame">
                 <canvas id="severityChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-4">
-        <div class="card">
+    <div class="col-lg-12">
+        <div class="card chart-card">
             <div class="card-header d-flex justify-content-between align-items-center">
 
     <span>
@@ -539,17 +582,31 @@
     </span>
 
 </div>
-            <div class="card-body">
+            <div class="card-body chart-card-body">
+                <div class="chart-frame chart-frame-wide">
                 <canvas id="attackerChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
 
 </div>
 
+</section>
+
     <!-- Recent Alerts -->
 
-    <div class="card mt-4">
+    <section id="recent-alerts" class="dashboard-section">
+
+    <div class="section-heading">
+        <div>
+            <span class="section-kicker">Triage</span>
+            <h2>Recent alerts</h2>
+        </div>
+        <p>Search, filter, export, and acknowledge detected activity</p>
+    </div>
+
+    <div class="card alerts-panel">
 
        <div class="card-header d-flex justify-content-between align-items-center">
 
@@ -565,10 +622,10 @@
     <span id="exportButtonLabel">Export Alerts</span>
 </button>
 </div>
-        <div class="card-body table-responsive">
-<div class="row g-3 mb-3">
+        <div class="card-body alerts-card-body">
+<div class="alert-filters">
 
-    <div class="col-md-4">
+    <div class="filter-field">
         <input
             type="text"
             id="alertSearch"
@@ -577,7 +634,7 @@
         >
     </div>
 
-    <div class="col-md-4">
+    <div class="filter-field">
         <select id="severityFilter" class="form-select">
             <option value="">All Severities</option>
             <option value="LOW">Low</option>
@@ -587,7 +644,7 @@
         </select>
     </div>
 
-    <div class="col-md-4">
+    <div class="filter-field">
         <select id="typeFilter" class="form-select">
             <option value="">All Alert Types</option>
             <option value="PORT_SCAN">Port Scan</option>
@@ -601,7 +658,8 @@
 
 </div>
 
-           <table id="alertsTable" class="table table-dark table-hover">
+    <div class="table-responsive alert-table-wrap">
+       <table id="alertsTable" class="table table-dark table-hover soc-table">
 
                 <thead>
 
@@ -705,11 +763,25 @@ System operating normally.
 
         </div>
 
+        </div>
+
     </div>
+
+    </section>
 
     <!-- Top Attackers -->
 
-    <div class="card mt-4">
+    <section id="top-attackers" class="dashboard-section">
+
+    <div class="section-heading">
+        <div>
+            <span class="section-kicker">Source analysis</span>
+            <h2>Top attackers</h2>
+        </div>
+        <p>Sources ranked by generated alerts</p>
+    </div>
+
+    <div class="card attackers-panel">
 
         <div class="card-header">
 
@@ -717,9 +789,10 @@ System operating normally.
 
         </div>
 
-        <div class="card-body table-responsive">
+        <div class="card-body">
+        <div class="table-responsive alert-table-wrap">
 
-            <table class="table table-dark table-hover">
+            <table class="table table-dark table-hover soc-table">
 
                 <thead>
 
@@ -773,7 +846,11 @@ System operating normally.
 
         </div>
 
+        </div>
+
     </div>
+
+    </section>
 
     <footer class="footer mt-5">
 
@@ -808,6 +885,10 @@ System operating normally.
     </div>
 
 </footer>
+
+</main>
+
+</div>
 
 </div>
 
